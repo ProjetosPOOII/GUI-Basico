@@ -1,5 +1,6 @@
 package siscom.model;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -27,6 +28,11 @@ public class ProdutoDados {
     public ArrayList<Produto> recuperaProdutosAtivos(){
         ArrayList<Produto> produtoRecovered = null;
         try{
+        	File arquivo = new File("produtosAtivos.dat");
+        	if(!arquivo.exists()) {
+        		salvaProdutosAtivos(new ArrayList<Produto>());
+        	}
+        	
             //Carrega o arquivo
             FileInputStream arquivoLeitura = new FileInputStream("produtosAtivos.dat");
 

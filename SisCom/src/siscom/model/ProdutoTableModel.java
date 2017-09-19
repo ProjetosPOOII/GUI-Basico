@@ -12,7 +12,9 @@ public class ProdutoTableModel extends AbstractTableModel {
 	public ProdutoTableModel() {
 		dados = new ArrayList<Produto>();
 	}
-	
+	public ArrayList<Produto> getProdutos(){
+		return dados;
+	}
 	public void addRow(Produto p) {
 		dados.add(p);
 		fireTableDataChanged();//força um refresh da tabela
