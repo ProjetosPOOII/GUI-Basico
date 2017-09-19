@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.*;
 
 import siscom.model.ComandaTableModel;
+import siscom.model.ItemComanda;
 import siscom.model.Mesa;
 import siscom.model.MesaComboBoxModel;
 import siscom.model.MesaDados;
@@ -19,6 +20,7 @@ public class JanelaPrincipal extends JFrame {
 	private MesaComboBoxModel mesaComboBoxModel;
 	private ProdutoComboBoxModel produtoComboModel;
 	private JTable tabela;
+	private JTextField tQtd;
 
 	public JanelaPrincipal() {
 		super("Sistema Gerenciador de Comandas -v0.1.0");
@@ -44,6 +46,10 @@ public class JanelaPrincipal extends JFrame {
 		produtoComboModel = new ProdutoComboBoxModel();
 		cProduto.setModel(produtoComboModel);
 		
+		JLabel lQtd = new JLabel("Qtd:");
+		bar.add(lQtd);
+		tQtd = new JTextField(5);
+		bar.add(tQtd);		
 		
 		JButton bMais = new JButton(" + ");
 		JButton bMenos = new JButton(" - ");
@@ -64,8 +70,46 @@ public class JanelaPrincipal extends JFrame {
 		
 		preencheComboBoxMesa();
 		preencheComboBoxProduto();
+		
+		bMais.addActionListener(new java.awt.event.ActionListener(){
+			public void actionPerformed(java.awt.event.ActionEvent evt){
+				bMaisActionPerformed();
+			}
+		});
+		bMenos.addActionListener(new java.awt.event.ActionListener(){
+			public void actionPerformed(java.awt.event.ActionEvent evt){
+				bMenosActionPerformed();
+			}
+		});
 	}
 	
+	public void bMaisActionPerformed() {
+		ComandaTableModel modelo = (ComandaTableModel) tabela.getModel();
+		boolean checa = true;
+		if(cMesa.getSelectedItem()== null) {
+			JOptionPane.showMessageDialog(null, "Selecione uma mesa!");
+			cMesa.requestFocus();
+			checa =false;
+		}else if(cProduto.getSelectedItem() == null) {
+			JOptionPane.showMessageDialog(null, "Selecione um produto!");
+			cProduto.requestFocus();
+			checa =false;
+		}else if(tQtd.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Infome uma quantidade");
+			tQtd.requestFocus();
+			checa =false;
+		}
+		if(checa) {
+			Mesa m = (Mesa) cMesa.getSelectedItem();
+			Produto p = (Produto) cProduto.getSelectedItem();
+			ItemComanda ic = new ItemComanda(p, Integer.parseInt(tQtd.getText()));
+			modelo.addRow(m, ic);
+		}
+	}
+	public void bMenosActionPerformed() {
+		ComandaTableModel modelo = (ComandaTableModel) tabela.getModel();
+		modelo.removeRow(tabela.getSelectedRow());
+	}
 	
 	private void preencheComboBoxProduto() {
 		ProdutoDados dados = new ProdutoDados();

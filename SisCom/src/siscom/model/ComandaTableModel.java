@@ -47,6 +47,10 @@ public class ComandaTableModel extends AbstractTableModel{
 	public int getRowCount() {
 		return dados.size();
 	}
+	
+	public String getColumnName(int num) {
+		return colunas[num];
+	}
 
 	@Override
 	public Object getValueAt(int linha, int coluna) {
