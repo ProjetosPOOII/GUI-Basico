@@ -21,6 +21,7 @@ public class JanelaPrincipal extends JFrame {
 	private ProdutoComboBoxModel produtoComboModel;
 	private JTable tabela;
 	private JTextField tQtd;
+	private MenuAplicacao menuAplicacao;
 
 	public JanelaPrincipal() {
 		super("Sistema Gerenciador de Comandas -v0.1.0");
@@ -29,6 +30,10 @@ public class JanelaPrincipal extends JFrame {
 		JPanel painel = new JPanel();
 		BorderLayout borda = new BorderLayout();
 		painel.setLayout(borda);
+		
+		//setando o menu da janela
+		menuAplicacao =new MenuAplicacao();
+		setJMenuBar(menuAplicacao);
 		
 		JToolBar bar = new JToolBar();
 		bar.setFloatable(false);
