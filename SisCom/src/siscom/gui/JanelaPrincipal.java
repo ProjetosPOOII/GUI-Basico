@@ -4,14 +4,21 @@ import java.awt.BorderLayout;
 
 import javax.swing.*;
 
+import siscom.model.ComandaTableModel;
 import siscom.model.Mesa;
 import siscom.model.MesaComboBoxModel;
 import siscom.model.MesaDados;
+import siscom.model.Produto;
+import siscom.model.ProdutoComboBoxModel;
+import siscom.model.ProdutoDados;
+import siscom.model.ProdutoTableModel;
 
 public class JanelaPrincipal extends JFrame {
 	private JComboBox cMesa;
 	private JComboBox cProduto;
 	private MesaComboBoxModel mesaComboBoxModel;
+	private ProdutoComboBoxModel produtoComboModel;
+	private JTable tabela;
 
 	public JanelaPrincipal() {
 		super("Sistema Gerenciador de Comandas -v0.1.0");
@@ -34,6 +41,8 @@ public class JanelaPrincipal extends JFrame {
 		bar.add(lProduto);
 		cProduto = new JComboBox<>();
 		bar.add(cProduto);
+		produtoComboModel = new ProdutoComboBoxModel();
+		cProduto.setModel(produtoComboModel);
 		
 		
 		JButton bMais = new JButton(" + ");
@@ -43,10 +52,29 @@ public class JanelaPrincipal extends JFrame {
 		
 		painel.add("North",bar);
 		
+		//criando a tabela
+		tabela = new JTable();
+		ComandaTableModel modelo = new ComandaTableModel();
+		tabela.setModel(modelo);
+				
+		JScrollPane barraRolagem = new JScrollPane(tabela);
+		painel.add("Center", barraRolagem);
+		
+		setContentPane(painel);
+		
 		preencheComboBoxMesa();
+		preencheComboBoxProduto();
 	}
 	
 	
+	private void preencheComboBoxProduto() {
+		ProdutoDados dados = new ProdutoDados();
+		for(Produto p:dados.recuperaProdutosAtivos()) {
+			produtoComboModel.addRow(p);
+		}
+	}
+
+
 	public void preencheComboBoxMesa() {
 		MesaDados dados = new MesaDados();
 		for(Mesa m:dados.recuperaMesasAtivas()) {
