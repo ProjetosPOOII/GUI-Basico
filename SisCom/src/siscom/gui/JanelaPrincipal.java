@@ -46,6 +46,7 @@ public class JanelaPrincipal extends JFrame {
 		preencheComboBoxMesa();
 	}
 	
+	
 	public void preencheComboBoxMesa() {
 		MesaDados dados = new MesaDados();
 		for(Mesa m:dados.recuperaMesasAtivas()) {

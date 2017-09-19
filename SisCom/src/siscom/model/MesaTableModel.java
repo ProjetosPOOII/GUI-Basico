@@ -40,5 +40,8 @@ public class MesaTableModel extends AbstractTableModel {
 		}
 		return null;
 	}
+	public ArrayList<Mesa> getMesas() {
+		return this.dados;
+	}
 
 }

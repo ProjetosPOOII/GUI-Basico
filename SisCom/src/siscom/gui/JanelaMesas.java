@@ -41,7 +41,6 @@ public class JanelaMesas extends JFrame {
 		tabela = new JTable();
 		MesaTableModel modelo = new MesaTableModel();
 		tabela.setModel(modelo);
-		modelo.addRow(new Mesa(1,2));
 		
 		JScrollPane barraRolagem = new JScrollPane(tabela);
 		painel.add("Center", barraRolagem);
@@ -59,15 +58,31 @@ public class JanelaMesas extends JFrame {
 				bMenosAction();
 			}
 		});
-	
+		carregaDados();
 	}
 	public void bMaisAction() {
 		MesaTableModel modelo = (MesaTableModel) this.tabela.getModel();
 		modelo.addRow(new Mesa(Integer.parseInt(tNroMesa.getText()),Integer.parseInt(tQtdLugares.getText())));
-		
+		salvarDados();
 	}
 	public void bMenosAction() {
 		MesaTableModel modelo = (MesaTableModel) this.tabela.getModel();
 		modelo.removeRow(tabela.getSelectedRow());
+		salvarDados();
+	}
+	
+
+	public void salvarDados() {
+		MesaDados dados =new MesaDados();
+		MesaTableModel modelo = (MesaTableModel) tabela.getModel();		
+		dados.salvaMesasAtivas(modelo.getMesas());
+	}
+	public void carregaDados() {
+		MesaDados dados =new MesaDados();
+		MesaTableModel modelo = new MesaTableModel();
+		for(Mesa m:dados.recuperaMesasAtivas()) {
+			modelo.addRow(m);
+		}
+		tabela.setModel(modelo);
 	}
 }
